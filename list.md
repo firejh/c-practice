@@ -40,6 +40,7 @@
 * [coroutine] - coroutine相关实现以及测试代码
 * [atom] - linux glibc原子操作函数实例
 * [time] - 测试tencent/msec/monitor/agent/monitor_api/opt_time.h
+* [gdb] - gdbinit脚本模板
 
 
 ## zk-kafka

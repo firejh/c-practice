@@ -43,7 +43,7 @@
 #include <unistd.h>
 
 #include "md5.h"
-#include "libc.h"
+#include "structs.h"
 
 /**
  * Calculate 128-bit(16-bytes) MD5 hash.

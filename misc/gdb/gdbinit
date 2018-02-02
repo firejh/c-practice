@@ -1,0 +1,32 @@
+#FILE		: .gdbinit
+#DESC		: it will be used by gdb
+#AUTHOR		: v1.0 written by stockszhao
+#DATE		: on Oct 16, 2012
+#MOD		: modified by * on June 2, 2012
+
+source ~/script/common.gdb
+source ~/script/stl.gdb
+source ~/script/nginx.gdb
+
+dir  /home/alex/test/c/openresty/resty/bundle/nginx-1.9.7/src/core:/home/alex/test/c/openresty/resty/bundle/nchan-master/
+#show directories
+file /home/alex/nginx
+set args -p /home/alex/test/c/nginx/ -c conf/nginx.conf
+#to see struct in a pretty style
+set print pretty on
+set listsize 25
+debug_thread
+# nchan_subscriber_directive
+# b nchan_setup.c:394
+# nchan_publisher_directive
+# b nchan_setup.c:335
+# nchan_pubsub_handler
+b nchan_module.c:192
+# nchan_publisher_body_handler_continued
+# b nchan_module.c:499
+# nchan_publisher_body_handler
+# b nchan_module.c:589
+info threads
+info break
+#debug_valgrind
+r

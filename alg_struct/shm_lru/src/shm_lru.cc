@@ -15,7 +15,9 @@
 #include <map>
 #include <list>
 #include <iostream>
+#include <algorithm>
 
+#include "tx_time.h"
 #include "shm_lru.h"
 
 using namespace std;
@@ -36,21 +38,45 @@ LRU::~LRU(void)
     keyToIterator.clear();
 }
 
+struct KeyTime {
+    time_buf_t time;
+    buf_t key;
+};
+
+bool CompareKeyTime(const KeyTime& a, const KeyTime& b)
+{
+    return a.time > b.time;
+}
+
+#include <iostream>
+
 bool LRU::InitLruMem(LruHashtable *table)
 {
     int max_slots = 0, used_slots = 0;
     table->GetCount(max_slots, used_slots);
 
     buf_t key, val;
+    KeyTime keyTime;
+    vector<KeyTime> keyList;
     for (int idx = 0; idx < max_slots;) {
         int ret = table->GetNext(key, val, idx);
         if (ret == OK) {
-            VisitKey(key);
+            // VisitKey(key);
+            keyTime.key = key;
+            memcpy(&keyTime.time, (time_buf_t*)&val[val.size() - sizeof(time_buf_t) - 1], sizeof(time_buf_t));
+            cout << "key:" << ((char*)&key[0]) << ", time:" << keyTime.time << endl;
+            keyList.push_back(keyTime);
         } else if (ERR_TBL_END == ret){
         } else{
             // LOG_ERR_KEY_INFO(key, "Failed to get next item in shmthis");
             return false;
         }
+    }
+
+    sort(keyList.begin(), keyList.end(), CompareKeyTime);
+    vector<KeyTime>::iterator it;
+    for (it = keyList.begin(); it != keyList.end(); it++) {
+        this->VisitKey(it->key);
     }
 
     return true;
@@ -183,25 +209,16 @@ int LruHashtable::Init(int maxSlotNum, key_t shmkey, mode_t mode, CompareBuf cmp
     return OK;
 }
 
-
-#include <sys/times.h>     // times
-#include <time.h>
-#include <unistd.h>        // usleep, sysconf
-
-#define TIME_USEC   ({                                     \
-  struct timeval cur_tv;                                   \
-  gettimeofday(&cur_tv, NULL);                             \
-  ((unsigned long)(cur_tv.tv_sec) << 32) + cur_tv.tv_usec; \
-  })
-
 int LruHashtable::Set(const buf_t& key, const buf_t& val)
 {
     if (key.empty()) {
         return ERR_PARAM;
     }
 
+    time_buf_t curTime = TIME_USEC;
     buf_t value(val);
-    long curTime = (long)time(NULL);
+    value.insert(value.end(), (time_buf_t*)&curTime, (time_buf_t*)&curTime + sizeof(curTime));
+    cout << "insert key:" << (char*)&(key[0]) << ", time:" << curTime << endl;
 
     buf_t val_in_mem;
     int retv = OK;
@@ -211,7 +228,7 @@ int LruHashtable::Set(const buf_t& key, const buf_t& val)
     }
 
     pthread_mutex_lock(&this->mutex);
-    bool ret = qhasharr_put(this->hashtable, (const char*)(key.data()), key.size(), (const char*)(val.data()), val.size());
+    bool ret = qhasharr_put(this->hashtable, (const char*)(key.data()), key.size(), (const char*)(value.data()), value.size());
     pthread_mutex_unlock(&this->mutex);
     while (!ret && errno == ENOBUFS) {
         buf_t RemovedKey;
@@ -231,7 +248,7 @@ int LruHashtable::Set(const buf_t& key, const buf_t& val)
             break;
         }
         pthread_mutex_lock(&this->mutex);
-        ret = qhasharr_put(this->hashtable, (const char*)(key.data()), key.size(), (const char*)(val.data()), val.size());
+        ret = qhasharr_put(this->hashtable, (const char*)(key.data()), key.size(), (const char*)(value.data()), value.size());
         pthread_mutex_unlock(&this->mutex);
     }
     if (ret) {
@@ -273,7 +290,7 @@ int LruHashtable::Get(const buf_t& key, buf_t& val)
         return ERR_NOT_FOUND;
     }
 
-    val.assign((unsigned char*)val_tmp, (unsigned char*)val_tmp + val_tmp_len);
+    val.assign((unsigned char*)val_tmp, (unsigned char*)val_tmp + val_tmp_len - sizeof(time_buf_t));
     free(val_tmp);
     val_tmp = NULL;
 
