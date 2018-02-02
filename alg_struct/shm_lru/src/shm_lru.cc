@@ -14,7 +14,7 @@
 #include <string>
 #include <map>
 #include <list>
-#include <iostream>
+// #include <iostream>
 #include <algorithm>
 
 #include "tx_time.h"
@@ -45,7 +45,7 @@ struct KeyTime {
 
 bool CompareKeyTime(const KeyTime& a, const KeyTime& b)
 {
-    return a.time > b.time;
+    return a.time < b.time;
 }
 
 #include <iostream>
@@ -63,8 +63,8 @@ bool LRU::InitLruMem(LruHashtable *table)
         if (ret == OK) {
             // VisitKey(key);
             keyTime.key = key;
-            memcpy(&keyTime.time, (time_buf_t*)&val[val.size() - sizeof(time_buf_t) - 1], sizeof(time_buf_t));
-            cout << "key:" << ((char*)&key[0]) << ", time:" << keyTime.time << endl;
+            memcpy(&keyTime.time, (unsigned char*)&val[val.size() - sizeof(time_buf_t)], sizeof(time_buf_t));
+            // cout << "key:" << ((char*)&key[0]) << ", time:" << keyTime.time << endl;
             keyList.push_back(keyTime);
         } else if (ERR_TBL_END == ret){
         } else{
@@ -217,8 +217,10 @@ int LruHashtable::Set(const buf_t& key, const buf_t& val)
 
     time_buf_t curTime = TIME_USEC;
     buf_t value(val);
-    value.insert(value.end(), (time_buf_t*)&curTime, (time_buf_t*)&curTime + sizeof(curTime));
-    cout << "insert key:" << (char*)&(key[0]) << ", time:" << curTime << endl;
+    value.insert(value.end(), (unsigned char*)&curTime, (unsigned char*)&curTime + sizeof(curTime));
+    // cout << "insert key:" << (char*)&(key[0]) << ", time:" << curTime << endl;
+    // memcpy(&curTime, &value[value.size() - sizeof(time_buf_t)], sizeof(time_buf_t));
+    // cout << "curTime:" << curTime << endl;
 
     buf_t val_in_mem;
     int retv = OK;
