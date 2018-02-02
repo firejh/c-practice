@@ -1,0 +1,318 @@
+./include/cstl_deque_private.h:11: *  The definition of deque_t struct.
+./include/cstl_deque_private.h:55:}deque_t;
+./include/cstl_deque_private.h:68: *           Returns: deque_t
+./include/cstl_deque_private.h:74:extern deque_t _create_deque(size_t t_typesize, const char* s_typename);
+./include/cstl_deque_private.h:80: *        Parameters: in) pt_deque: deque_t*
+./include/cstl_deque_private.h:90:extern void _deque_init_elem(deque_t* pt_deque, size_t t_count, ...);
+./include/cstl_deque_private.h:96: *        Parameters: in) pt_deque: deque_t*
+./include/cstl_deque_private.h:107:    deque_t* pt_deque, size_t t_count, va_list val_elemlist);
+./include/cstl_deque_private.h:113: *        Parameters: in) pt_deque: deque_t*
+./include/cstl_deque_private.h:124:extern void _deque_assign_elem(deque_t* pt_deque, size_t t_count, ...);
+./include/cstl_deque_private.h:130: *        Parameters: in) pt_deque: deque_t*
+./include/cstl_deque_private.h:142:    deque_t* pt_deque, size_t t_count, va_list val_elemlist);
+./include/cstl_deque_private.h:148: *        Parameters: in) pt_deque: deque_t*
+./include/cstl_deque_private.h:157:extern void _deque_push_back(deque_t* pt_deque, ...);
+./include/cstl_deque_private.h:163: *        Parameters: in) pt_deque: deque_t*
+./include/cstl_deque_private.h:172:extern void _deque_push_back_varg(deque_t* pt_deque, va_list val_elemlist);
+./include/cstl_deque_private.h:178: *        Parameters: in) pt_deque: deque_t*
+./include/cstl_deque_private.h:187:extern void _deque_push_front(deque_t* pt_deque, ...);
+./include/cstl_deque_private.h:193: *        Parameters: in) pt_deque: deque_t*
+./include/cstl_deque_private.h:202:extern void _deque_push_front_varg(deque_t* pt_deque, va_list val_elemlist);
+./include/cstl_deque_private.h:208: *        Parameters: in) pt_deque: deque_t*
+./include/cstl_deque_private.h:220:extern void _deque_resize_elem(deque_t* pt_deque, size_t t_resize, ...);
+./include/cstl_deque_private.h:226: *        Parameters: in) pt_deque: deque_t*
+./include/cstl_deque_private.h:239:    deque_t* pt_deque, size_t t_resize, va_list val_elemlist);
+./include/cstl_deque_private.h:245: *        Parameters: in) pt_deque: deque_t*
+./include/cstl_deque_private.h:260:    deque_t* pt_deque, deque_iterator_t t_pos, size_t t_count, ...);
+./include/cstl_deque_private.h:266: *        Parameters: in) pt_deque: deque_t*
+./include/cstl_deque_private.h:281:    deque_t* pt_deque, 
+./include/cstl_queue_private.h:33:/* queue struct default use deque_t */
+./include/cstl_queue_private.h:38:        deque_t _t_deque;
+./include/cstl_iterator.h:55:    ((deque_t*)((pt_iterator)->_pt_container))
+./include/cdeque.h:11: *  The deque_t and its function header file for user.
+./include/cstl_stack_private.h:35:/* the stack struct default use deque_t */
+./include/cstl_stack_private.h:40:        deque_t  _t_deque;
+./include/cstl_deque.h:59: *        Parameters: in) pt_deque: deque_t*
+./include/cstl_deque.h:65:extern void deque_init(deque_t* pt_deque);
+./include/cstl_deque.h:71: *        Parameters: in) pt_deque: deque_t*
+./include/cstl_deque.h:79:extern void deque_init_n(deque_t* pt_deque, size_t t_count);
+./include/cstl_deque.h:85: *        Parameters: in) pt_deque: deque_t*
+./include/cstl_deque.h:91:extern void deque_destroy(deque_t* pt_deque);
+./include/cstl_deque.h:97: *        Parameters: in) pt_dequedest: deque_t*
+./include/cstl_deque.h:99: *                    in) cpt_dequesrc: const deque_t*
+./include/cstl_deque.h:106:extern void deque_init_copy(deque_t* pt_dequedest, const deque_t* cpt_dequesrc);
+./include/cstl_deque.h:112: *        Parameters: in) pt_dequedest: deque_t*
+./include/cstl_deque.h:124:    deque_t* pt_dequedest, deque_iterator_t t_begin, deque_iterator_t t_end);
+./include/cstl_deque.h:130: *        Parameters: in) cpt_deque: const deque_t*
+./include/cstl_deque.h:137:extern bool_t deque_empty(const deque_t* cpt_deque);
+./include/cstl_deque.h:143: *        Parameters: in) cpt_deque: const deque_t*
+./include/cstl_deque.h:150:extern size_t deque_size(const deque_t* cpt_deque);
+./include/cstl_deque.h:156: *        Parameters: in) cpt_deque: const deque_t*
+./include/cstl_deque.h:163:extern size_t deque_max_size(const deque_t* cpt_deque);
+./include/cstl_deque.h:169: *        Parameters: in) cpt_deque: const deque_t*
+./include/cstl_deque.h:176:extern void* deque_front(const deque_t* cpt_deque);
+./include/cstl_deque.h:182: *        Parameters: in) cpt_deque: const deque_t*
+./include/cstl_deque.h:189:extern void* deque_back(const deque_t* cpt_deque);
+./include/cstl_deque.h:195: *        Parameters: in) cpt_deque: const deque_t*
+./include/cstl_deque.h:202:extern deque_iterator_t deque_begin(const deque_t* cpt_deque);
+./include/cstl_deque.h:208: *        Parameters: in) cpt_deque: const deque_t*
+./include/cstl_deque.h:215:extern deque_iterator_t deque_end(const deque_t* cpt_deque);
+./include/cstl_deque.h:221: *        Parameters: in) cpt_deque: const deque_t*
+./include/cstl_deque.h:229:extern deque_reverse_iterator_t deque_rbegin(const deque_t* cpt_deque);
+./include/cstl_deque.h:235: *        Parameters: in) cpt_deque: const deque_t*
+./include/cstl_deque.h:243:extern deque_reverse_iterator_t deque_rend(const deque_t* cpt_deque);
+./include/cstl_deque.h:249: *        Parameters: in) pt_dequedest: deque_t*
+./include/cstl_deque.h:251: *                    in) cpt_dequesrc: const deque_t*
+./include/cstl_deque.h:258:extern void deque_assign(deque_t* pt_dequedest, const deque_t* cpt_dequesrc);
+./include/cstl_deque.h:264: *        Parameters: in) pt_deque: deque_t*
+./include/cstl_deque.h:276:    deque_t* pt_deque, deque_iterator_t t_begin, deque_iterator_t t_end);
+./include/cstl_deque.h:282: *        Parameters: in) cpt_dequefirst: const deque_t*
+./include/cstl_deque.h:284: *                    in) cpt_dequesecond: const deque_t*
+./include/cstl_deque.h:292:    const deque_t* cpt_dequefirst, const deque_t* cpt_dequesecond);
+./include/cstl_deque.h:298: *        Parameters: in) cpt_dequefirst: const deque_t*
+./include/cstl_deque.h:300: *                    in) cpt_dequesecond: const deque_t*
+./include/cstl_deque.h:308:    const deque_t* cpt_dequefirst, const deque_t* cpt_dequesecond);
+./include/cstl_deque.h:314: *        Parameters: in) cpt_dequefirst: const deque_t*
+./include/cstl_deque.h:316: *                    in) cpt_dequesecond: const deque_t*
+./include/cstl_deque.h:324:    const deque_t* cpt_dequefirst, const deque_t* cpt_dequesecond);
+./include/cstl_deque.h:330: *        Parameters: in) cpt_dequefirst: const deque_t*
+./include/cstl_deque.h:332: *                    in) cpt_dequesecond: const deque_t*
+./include/cstl_deque.h:340:    const deque_t* cpt_dequefirst, const deque_t* cpt_dequesecond);
+./include/cstl_deque.h:346: *        Parameters: in) cpt_dequefirst: const deque_t*
+./include/cstl_deque.h:348: *                    in) cpt_dequesecond: const deque_t*
+./include/cstl_deque.h:357:    const deque_t* cpt_dequefirst, const deque_t* cpt_dequesecond);
+./include/cstl_deque.h:363: *        Parameters: in) cpt_dequefirst: const deque_t*
+./include/cstl_deque.h:365: *                    in) cpt_dequesecond: const deque_t*
+./include/cstl_deque.h:374:    const deque_t* cpt_dequefirst, const deque_t* cpt_dequesecond);
+./include/cstl_deque.h:380: *        Parameters: in) cpt_deque: const deque_t*
+./include/cstl_deque.h:389:extern void* deque_at(const deque_t* cpt_deque, size_t t_pos);
+./include/cstl_deque.h:395: *        Parameters: in) pt_dequefirst: deque_t*
+./include/cstl_deque.h:397: *                    in) pt_dequesecond: deque_t*
+./include/cstl_deque.h:404:extern void deque_swap(deque_t* pt_dequefirst, deque_t* pt_dequesecond);
+./include/cstl_deque.h:410: *        Parameters: in) pt_deque: deque_t*
+./include/cstl_deque.h:417:extern void deque_pop_back(deque_t* pt_deque);
+./include/cstl_deque.h:423: *        Parameters: in) pt_deque: deque_t*
+./include/cstl_deque.h:430:extern void deque_pop_front(deque_t* pt_deque);
+./include/cstl_deque.h:436: *        Parameters: in) pt_deque: deque_t*
+./include/cstl_deque.h:451:    deque_t* pt_deque, deque_iterator_t t_pos, 
+./include/cstl_deque.h:458: *        Parameters: in) pt_deque: deque_t*
+./include/cstl_deque.h:468:extern deque_iterator_t deque_erase(deque_t* pt_deque, deque_iterator_t t_pos);
+./include/cstl_deque.h:474: *        Parameters: in) pt_deque: deque_t*
+./include/cstl_deque.h:487:    deque_t* pt_deque, deque_iterator_t t_begin, deque_iterator_t t_end);
+./include/cstl_deque.h:493: *        Parameters: in) pt_deque: deque_t*
+./include/cstl_deque.h:503:extern void deque_resize(deque_t* pt_deque, size_t t_resize);
+./include/cstl_deque.h:509: *        Parameters: in) pt_deque: deque_t*
+./include/cstl_deque.h:516:extern void deque_clear(deque_t* pt_deque);
+./src/cstl_deque.c:42: *    Parameters: in) cpt_deque: const deque_t*
+./src/cstl_deque.c:50:    const deque_t* cpt_deque, const deque_iterator_t* cpt_iterator);
+./src/cstl_deque.c:67: *    Parameters: in) cpt_deque: const deque_t*
+./src/cstl_deque.c:75:    const deque_t* cpt_deque, const deque_iterator_t* cpt_iterator);
+./src/cstl_deque.c:79: *    Parameters: in) cpt_dequefirst: const deque_t*
+./src/cstl_deque.c:81: *                in) cpt_dequesecond: const deque_t*
+./src/cstl_deque.c:87:    const deque_t* cpt_dequefirst, const deque_t* cpt_dequesecond);
+./src/cstl_deque.c:92: *    Parameters: in) pt_deque: deque_t*
+./src/cstl_deque.c:104:    deque_t* pt_deque, size_t t_expandsize, deque_iterator_t* pt_pos);
+./src/cstl_deque.c:108: *    Parameters: in) pt_deque: deque_t*
+./src/cstl_deque.c:120:    deque_t* pt_deque, size_t t_expandsize, deque_iterator_t* pt_pos);
+./src/cstl_deque.c:124: *    Parameters: in) pt_deque: deque_t*
+./src/cstl_deque.c:132:static void _shrink_at_back(deque_t* pt_deque, size_t t_shrinksize);
+./src/cstl_deque.c:136: *    Parameters: in) pt_deque: deque_t*
+./src/cstl_deque.c:144:static void _shrink_at_front(deque_t* pt_deque, size_t t_shrinksize);
+./src/cstl_deque.c:148: *    Parameters: in) pt_deque: deque_t*
+./src/cstl_deque.c:162:    deque_t* pt_deque, deque_iterator_t t_begin, 
+./src/cstl_deque.c:167: *    Parameters: in) pt_deque: deque_t*
+./src/cstl_deque.c:181:    deque_t* pt_deque, deque_iterator_t t_begin, 
+./src/cstl_deque.c:211:    deque_t* pt_avoidwarning = NULL;
+./src/cstl_deque.c:212:    pt_avoidwarning = (deque_t*)cpt_deque;
+./src/cstl_deque.c:335:    deque_t* pt_avoidwarning = NULL;
+./src/cstl_deque.c:336:    pt_avoidwarning = (deque_t*)cpt_deque;
+./src/cstl_deque.c:427:    deque_t* pt_avoidwarning = NULL;
+./src/cstl_deque.c:428:    pt_avoidwarning = (deque_t*)cpt_deque;
+./src/cstl_deque.c:528:    deque_t* pt_avoidwarning = NULL;
+./src/cstl_deque.c:529:    pt_avoidwarning = (deque_t*)cpt_deque;
+./src/cstl_deque.c:582:deque_t _create_deque(size_t t_typesize, const char* sz_typename)
+./src/cstl_deque.c:584:    deque_t t_newdeque;
+./src/cstl_deque.c:606:void _deque_push_back_varg(deque_t* pt_deque, va_list val_elemlist)
+./src/cstl_deque.c:620:void deque_init(deque_t* pt_deque)
+./src/cstl_deque.c:625:void deque_init_n(deque_t* pt_deque, size_t t_count)
+./src/cstl_deque.c:630:void _deque_init_elem(deque_t* pt_deque, size_t t_count, ...)
+./src/cstl_deque.c:638:    deque_t* pt_deque, size_t t_count, va_list val_elemlist)
+./src/cstl_deque.c:765:void deque_destroy(deque_t* pt_deque)
+./src/cstl_deque.c:809:bool_t deque_empty(const deque_t* cpt_deque)
+./src/cstl_deque.c:814:size_t deque_size(const deque_t* cpt_deque)
+./src/cstl_deque.c:819:size_t deque_max_size(const deque_t* cpt_deque)
+./src/cstl_deque.c:829:void* deque_front(const deque_t* cpt_deque)
+./src/cstl_deque.c:841:void* deque_back(const deque_t* cpt_deque)
+./src/cstl_deque.c:853:deque_iterator_t deque_begin(const deque_t* cpt_deque)
+./src/cstl_deque.c:858:deque_iterator_t deque_end(const deque_t* cpt_deque)
+./src/cstl_deque.c:863:deque_reverse_iterator_t deque_rbegin(const deque_t* cpt_deque)
+./src/cstl_deque.c:878:deque_reverse_iterator_t deque_rend(const deque_t* cpt_deque)
+./src/cstl_deque.c:894:void deque_init_copy(deque_t* pt_dequedest, const deque_t* cpt_dequesrc)
+./src/cstl_deque.c:901:    deque_t* pt_dequedest, deque_iterator_t t_begin, deque_iterator_t t_end)
+./src/cstl_deque.c:940:void deque_assign(deque_t* pt_dequedest, const deque_t* cpt_dequesrc)
+./src/cstl_deque.c:946:void _deque_assign_elem(deque_t* pt_deque, size_t t_count, ...)
+./src/cstl_deque.c:954:    deque_t* pt_deque, size_t t_count, va_list val_elemlist)
+./src/cstl_deque.c:972:    deque_t* pt_deque, deque_iterator_t t_begin, deque_iterator_t t_end)
+./src/cstl_deque.c:1004:    const deque_t* cpt_dequefirst, const deque_t* cpt_dequesecond)
+./src/cstl_deque.c:1080:    const deque_t* cpt_dequefirst, const deque_t* cpt_dequesecond)
+./src/cstl_deque.c:1085:bool_t deque_less(const deque_t* cpt_dequefirst, const deque_t* cpt_dequesecond)
+./src/cstl_deque.c:1152:    const deque_t* cpt_dequefirst, const deque_t* cpt_dequesecond)
+./src/cstl_deque.c:1159:    const deque_t* cpt_dequefirst, const deque_t* cpt_dequesecond)
+./src/cstl_deque.c:1165:    const deque_t* cpt_dequefirst, const deque_t* cpt_dequesecond)
+./src/cstl_deque.c:1171:void* deque_at(const deque_t* cpt_deque, size_t t_pos)
+./src/cstl_deque.c:1188:void deque_swap(deque_t* pt_dequefirst, deque_t* pt_dequesecond)
+./src/cstl_deque.c:1190:    deque_t t_dequetmp;
+./src/cstl_deque.c:1206:void _deque_push_back(deque_t* pt_deque, ...)
+./src/cstl_deque.c:1213:void deque_pop_back(deque_t* pt_deque)
+./src/cstl_deque.c:1220:void _deque_push_front(deque_t* pt_deque, ...)
+./src/cstl_deque.c:1227:void _deque_push_front_varg(deque_t* pt_deque, va_list val_elemlist)
+./src/cstl_deque.c:1237:void deque_pop_front(deque_t* pt_deque)
+./src/cstl_deque.c:1244:deque_iterator_t _deque_insert_n(deque_t* pt_deque, deque_iterator_t t_pos, size_t t_count, ...)
+./src/cstl_deque.c:1252:    deque_t* pt_deque, deque_iterator_t t_pos, size_t t_count, va_list val_elemlist)
+./src/cstl_deque.c:1308:    deque_t* pt_deque, deque_iterator_t t_pos, 
+./src/cstl_deque.c:1377:deque_iterator_t deque_erase(deque_t* pt_deque, deque_iterator_t t_pos)
+./src/cstl_deque.c:1404:    deque_t* pt_deque, deque_iterator_t t_begin, deque_iterator_t t_end)
+./src/cstl_deque.c:1416:void deque_resize(deque_t* pt_deque, size_t t_resize)
+./src/cstl_deque.c:1421:void _deque_resize_elem(deque_t* pt_deque, size_t t_resize, ...)
+./src/cstl_deque.c:1429:    deque_t* pt_deque, size_t t_resize, va_list val_elemlist)
+./src/cstl_deque.c:1452:void deque_clear(deque_t* pt_deque)
+./src/cstl_deque.c:1460:    const deque_t* cpt_deque, const deque_iterator_t* cpt_iterator)
+./src/cstl_deque.c:1596:    const deque_t* cpt_deque, const deque_iterator_t* cpt_iterator)
+./src/cstl_deque.c:1621:    const deque_t* cpt_dequefirst, const deque_t* cpt_dequesecond)
+./src/cstl_deque.c:1646:    deque_t* pt_deque, size_t t_expandsize, deque_iterator_t* pt_pos)
+./src/cstl_deque.c:1814:    deque_t* pt_deque, size_t t_expandsize, deque_iterator_t* pt_pos)
+./src/cstl_deque.c:2012:static void _shrink_at_back(deque_t* pt_deque, size_t t_shrinksize)
+./src/cstl_deque.c:2036:static void _shrink_at_front(deque_t* pt_deque, size_t t_shrinksize)
+./src/cstl_deque.c:2061:    deque_t* pt_deque, deque_iterator_t t_begin, 
+./src/cstl_deque.c:2104:    deque_t* pt_deque, deque_iterator_t t_begin,
+./tags:626:_create_deque	include/cstl_deque_private.h	/^extern deque_t _create_deque(size_t t_typesize, const char* s_typename);$/;"	p	signature:(size_t t_typesize, const char* s_typename)
+./tags:627:_create_deque	src/cstl_deque.c	/^deque_t _create_deque(size_t t_typesize, const char* sz_typename)$/;"	f	signature:(size_t t_typesize, const char* sz_typename)
+./tags:668:_deque_assign_elem	include/cstl_deque_private.h	/^extern void _deque_assign_elem(deque_t* pt_deque, size_t t_count, ...);$/;"	p	signature:(deque_t* pt_deque, size_t t_count, ...)
+./tags:669:_deque_assign_elem	src/cstl_deque.c	/^void _deque_assign_elem(deque_t* pt_deque, size_t t_count, ...)$/;"	f	signature:(deque_t* pt_deque, size_t t_count, ...)
+./tags:670:_deque_assign_elem_varg	include/cstl_deque_private.h	/^extern void _deque_assign_elem_varg($/;"	p	signature:( deque_t* pt_deque, size_t t_count, va_list val_elemlist)
+./tags:671:_deque_assign_elem_varg	src/cstl_deque.c	/^void _deque_assign_elem_varg($/;"	f	signature:( deque_t* pt_deque, size_t t_count, va_list val_elemlist)
+./tags:672:_deque_init_elem	include/cstl_deque_private.h	/^extern void _deque_init_elem(deque_t* pt_deque, size_t t_count, ...);$/;"	p	signature:(deque_t* pt_deque, size_t t_count, ...)
+./tags:673:_deque_init_elem	src/cstl_deque.c	/^void _deque_init_elem(deque_t* pt_deque, size_t t_count, ...)$/;"	f	signature:(deque_t* pt_deque, size_t t_count, ...)
+./tags:674:_deque_init_elem_varg	include/cstl_deque_private.h	/^extern void _deque_init_elem_varg($/;"	p	signature:( deque_t* pt_deque, size_t t_count, va_list val_elemlist)
+./tags:675:_deque_init_elem_varg	src/cstl_deque.c	/^void _deque_init_elem_varg($/;"	f	signature:( deque_t* pt_deque, size_t t_count, va_list val_elemlist)
+./tags:676:_deque_insert_n	include/cstl_deque_private.h	/^extern deque_iterator_t _deque_insert_n($/;"	p	signature:( deque_t* pt_deque, deque_iterator_t t_pos, size_t t_count, ...)
+./tags:677:_deque_insert_n	src/cstl_deque.c	/^deque_iterator_t _deque_insert_n(deque_t* pt_deque, deque_iterator_t t_pos, size_t t_count, ...)$/;"	f	signature:(deque_t* pt_deque, deque_iterator_t t_pos, size_t t_count, ...)
+./tags:678:_deque_insert_n_varg	include/cstl_deque_private.h	/^extern deque_iterator_t _deque_insert_n_varg($/;"	p	signature:( deque_t* pt_deque, deque_iterator_t t_pos, size_t t_count, va_list val_elemlist)
+./tags:679:_deque_insert_n_varg	src/cstl_deque.c	/^deque_iterator_t _deque_insert_n_varg($/;"	f	signature:( deque_t* pt_deque, deque_iterator_t t_pos, size_t t_count, va_list val_elemlist)
+./tags:704:_deque_push_back	include/cstl_deque_private.h	/^extern void _deque_push_back(deque_t* pt_deque, ...);$/;"	p	signature:(deque_t* pt_deque, ...)
+./tags:705:_deque_push_back	src/cstl_deque.c	/^void _deque_push_back(deque_t* pt_deque, ...)$/;"	f	signature:(deque_t* pt_deque, ...)
+./tags:706:_deque_push_back_varg	include/cstl_deque_private.h	/^extern void _deque_push_back_varg(deque_t* pt_deque, va_list val_elemlist);$/;"	p	signature:(deque_t* pt_deque, va_list val_elemlist)
+./tags:707:_deque_push_back_varg	src/cstl_deque.c	/^void _deque_push_back_varg(deque_t* pt_deque, va_list val_elemlist)$/;"	f	signature:(deque_t* pt_deque, va_list val_elemlist)
+./tags:708:_deque_push_front	include/cstl_deque_private.h	/^extern void _deque_push_front(deque_t* pt_deque, ...);$/;"	p	signature:(deque_t* pt_deque, ...)
+./tags:709:_deque_push_front	src/cstl_deque.c	/^void _deque_push_front(deque_t* pt_deque, ...)$/;"	f	signature:(deque_t* pt_deque, ...)
+./tags:710:_deque_push_front_varg	include/cstl_deque_private.h	/^extern void _deque_push_front_varg(deque_t* pt_deque, va_list val_elemlist);$/;"	p	signature:(deque_t* pt_deque, va_list val_elemlist)
+./tags:711:_deque_push_front_varg	src/cstl_deque.c	/^void _deque_push_front_varg(deque_t* pt_deque, va_list val_elemlist)$/;"	f	signature:(deque_t* pt_deque, va_list val_elemlist)
+./tags:712:_deque_resize_elem	include/cstl_deque_private.h	/^extern void _deque_resize_elem(deque_t* pt_deque, size_t t_resize, ...);$/;"	p	signature:(deque_t* pt_deque, size_t t_resize, ...)
+./tags:713:_deque_resize_elem	src/cstl_deque.c	/^void _deque_resize_elem(deque_t* pt_deque, size_t t_resize, ...)$/;"	f	signature:(deque_t* pt_deque, size_t t_resize, ...)
+./tags:714:_deque_resize_elem_varg	include/cstl_deque_private.h	/^extern void _deque_resize_elem_varg($/;"	p	signature:( deque_t* pt_deque, size_t t_resize, va_list val_elemlist)
+./tags:715:_deque_resize_elem_varg	src/cstl_deque.c	/^void _deque_resize_elem_varg($/;"	f	signature:( deque_t* pt_deque, size_t t_resize, va_list val_elemlist)
+./tags:722:_expand_at_back	src/cstl_deque.c	/^static deque_iterator_t _expand_at_back($/;"	f	file:	signature:( deque_t* pt_deque, size_t t_expandsize, deque_iterator_t* pt_pos)
+./tags:723:_expand_at_back	src/cstl_deque.c	/^static deque_iterator_t _expand_at_back($/;"	p	file:	signature:( deque_t* pt_deque, size_t t_expandsize, deque_iterator_t* pt_pos)
+./tags:724:_expand_at_front	src/cstl_deque.c	/^static deque_iterator_t _expand_at_front($/;"	f	file:	signature:( deque_t* pt_deque, size_t t_expandsize, deque_iterator_t* pt_pos)
+./tags:725:_expand_at_front	src/cstl_deque.c	/^static deque_iterator_t _expand_at_front($/;"	p	file:	signature:( deque_t* pt_deque, size_t t_expandsize, deque_iterator_t* pt_pos)
+./tags:1037:_iterator_belong_to_deque	src/cstl_deque.c	/^static bool_t _iterator_belong_to_deque($/;"	f	file:	signature:( const deque_t* cpt_deque, const deque_iterator_t* cpt_iterator)
+./tags:1038:_iterator_belong_to_deque	src/cstl_deque.c	/^static bool_t _iterator_belong_to_deque($/;"	p	file:	signature:( const deque_t* cpt_deque, const deque_iterator_t* cpt_iterator)
+./tags:1173:_move_elem_to_back	src/cstl_deque.c	/^static deque_iterator_t _move_elem_to_back($/;"	f	file:	signature:( deque_t* pt_deque, deque_iterator_t t_begin, deque_iterator_t t_end, size_t t_movesize)
+./tags:1174:_move_elem_to_back	src/cstl_deque.c	/^static deque_iterator_t _move_elem_to_back($/;"	p	file:	signature:( deque_t* pt_deque, deque_iterator_t t_begin, deque_iterator_t t_end, size_t t_movesize)
+./tags:1175:_move_elem_to_front	src/cstl_deque.c	/^static deque_iterator_t _move_elem_to_front($/;"	f	file:	signature:( deque_t* pt_deque, deque_iterator_t t_begin, deque_iterator_t t_end, size_t t_movesize)
+./tags:1176:_move_elem_to_front	src/cstl_deque.c	/^static deque_iterator_t _move_elem_to_front($/;"	p	file:	signature:( deque_t* pt_deque, deque_iterator_t t_begin, deque_iterator_t t_end, size_t t_movesize)
+./tags:1451:_same_deque_iterator_type	src/cstl_deque.c	/^static bool_t _same_deque_iterator_type($/;"	f	file:	signature:( const deque_t* cpt_deque, const deque_iterator_t* cpt_iterator)
+./tags:1452:_same_deque_iterator_type	src/cstl_deque.c	/^static bool_t _same_deque_iterator_type($/;"	p	file:	signature:( const deque_t* cpt_deque, const deque_iterator_t* cpt_iterator)
+./tags:1453:_same_deque_type	src/cstl_deque.c	/^static bool_t _same_deque_type($/;"	f	file:	signature:( const deque_t* cpt_dequefirst, const deque_t* cpt_dequesecond)
+./tags:1454:_same_deque_type	src/cstl_deque.c	/^static bool_t _same_deque_type($/;"	p	file:	signature:( const deque_t* cpt_dequefirst, const deque_t* cpt_dequesecond)
+./tags:1531:_shrink_at_back	src/cstl_deque.c	/^static void _shrink_at_back(deque_t* pt_deque, size_t t_shrinksize)$/;"	f	file:	signature:(deque_t* pt_deque, size_t t_shrinksize)
+./tags:1532:_shrink_at_back	src/cstl_deque.c	/^static void _shrink_at_back(deque_t* pt_deque, size_t t_shrinksize);$/;"	p	file:	signature:(deque_t* pt_deque, size_t t_shrinksize)
+./tags:1533:_shrink_at_front	src/cstl_deque.c	/^static void _shrink_at_front(deque_t* pt_deque, size_t t_shrinksize)$/;"	f	file:	signature:(deque_t* pt_deque, size_t t_shrinksize)
+./tags:1534:_shrink_at_front	src/cstl_deque.c	/^static void _shrink_at_front(deque_t* pt_deque, size_t t_shrinksize);$/;"	p	file:	signature:(deque_t* pt_deque, size_t t_shrinksize)
+./tags:1615:_t_deque	include/cstl_queue_private.h	/^        deque_t _t_deque;$/;"	m	union:_tagqueue::__anon3	access:public
+./tags:1616:_t_deque	include/cstl_stack_private.h	/^        deque_t  _t_deque;$/;"	m	union:_tagstack::__anon10	access:public
+./tags:1806:_tagqueue::__anon3::_t_deque	include/cstl_queue_private.h	/^        deque_t _t_deque;$/;"	m	union:_tagqueue::__anon3	access:public
+./tags:1842:_tagstack::__anon10::_t_deque	include/cstl_stack_private.h	/^        deque_t  _t_deque;$/;"	m	union:_tagstack::__anon10	access:public
+./tags:2420:deque_assign	include/cstl_deque.h	/^extern void deque_assign(deque_t* pt_dequedest, const deque_t* cpt_dequesrc);$/;"	p	signature:(deque_t* pt_dequedest, const deque_t* cpt_dequesrc)
+./tags:2421:deque_assign	src/cstl_deque.c	/^void deque_assign(deque_t* pt_dequedest, const deque_t* cpt_dequesrc)$/;"	f	signature:(deque_t* pt_dequedest, const deque_t* cpt_dequesrc)
+./tags:2423:deque_assign_range	include/cstl_deque.h	/^extern void deque_assign_range($/;"	p	signature:( deque_t* pt_deque, deque_iterator_t t_begin, deque_iterator_t t_end)
+./tags:2424:deque_assign_range	src/cstl_deque.c	/^void deque_assign_range($/;"	f	signature:( deque_t* pt_deque, deque_iterator_t t_begin, deque_iterator_t t_end)
+./tags:2425:deque_at	include/cstl_deque.h	/^extern void* deque_at(const deque_t* cpt_deque, size_t t_pos);$/;"	p	signature:(const deque_t* cpt_deque, size_t t_pos)
+./tags:2426:deque_at	src/cstl_deque.c	/^void* deque_at(const deque_t* cpt_deque, size_t t_pos)$/;"	f	signature:(const deque_t* cpt_deque, size_t t_pos)
+./tags:2427:deque_back	include/cstl_deque.h	/^extern void* deque_back(const deque_t* cpt_deque);$/;"	p	signature:(const deque_t* cpt_deque)
+./tags:2428:deque_back	src/cstl_deque.c	/^void* deque_back(const deque_t* cpt_deque)$/;"	f	signature:(const deque_t* cpt_deque)
+./tags:2429:deque_begin	include/cstl_deque.h	/^extern deque_iterator_t deque_begin(const deque_t* cpt_deque);$/;"	p	signature:(const deque_t* cpt_deque)
+./tags:2430:deque_begin	src/cstl_deque.c	/^deque_iterator_t deque_begin(const deque_t* cpt_deque)$/;"	f	signature:(const deque_t* cpt_deque)
+./tags:2431:deque_clear	include/cstl_deque.h	/^extern void deque_clear(deque_t* pt_deque);$/;"	p	signature:(deque_t* pt_deque)
+./tags:2432:deque_clear	src/cstl_deque.c	/^void deque_clear(deque_t* pt_deque)$/;"	f	signature:(deque_t* pt_deque)
+./tags:2433:deque_destroy	include/cstl_deque.h	/^extern void deque_destroy(deque_t* pt_deque);$/;"	p	signature:(deque_t* pt_deque)
+./tags:2434:deque_destroy	src/cstl_deque.c	/^void deque_destroy(deque_t* pt_deque)$/;"	f	signature:(deque_t* pt_deque)
+./tags:2435:deque_empty	include/cstl_deque.h	/^extern bool_t deque_empty(const deque_t* cpt_deque);$/;"	p	signature:(const deque_t* cpt_deque)
+./tags:2436:deque_empty	src/cstl_deque.c	/^bool_t deque_empty(const deque_t* cpt_deque)$/;"	f	signature:(const deque_t* cpt_deque)
+./tags:2437:deque_end	include/cstl_deque.h	/^extern deque_iterator_t deque_end(const deque_t* cpt_deque);$/;"	p	signature:(const deque_t* cpt_deque)
+./tags:2438:deque_end	src/cstl_deque.c	/^deque_iterator_t deque_end(const deque_t* cpt_deque)$/;"	f	signature:(const deque_t* cpt_deque)
+./tags:2439:deque_equal	include/cstl_deque.h	/^extern bool_t deque_equal($/;"	p	signature:( const deque_t* cpt_dequefirst, const deque_t* cpt_dequesecond)
+./tags:2440:deque_equal	src/cstl_deque.c	/^bool_t deque_equal($/;"	f	signature:( const deque_t* cpt_dequefirst, const deque_t* cpt_dequesecond)
+./tags:2441:deque_erase	include/cstl_deque.h	/^extern deque_iterator_t deque_erase(deque_t* pt_deque, deque_iterator_t t_pos);$/;"	p	signature:(deque_t* pt_deque, deque_iterator_t t_pos)
+./tags:2442:deque_erase	src/cstl_deque.c	/^deque_iterator_t deque_erase(deque_t* pt_deque, deque_iterator_t t_pos)$/;"	f	signature:(deque_t* pt_deque, deque_iterator_t t_pos)
+./tags:2443:deque_erase_range	include/cstl_deque.h	/^extern deque_iterator_t deque_erase_range($/;"	p	signature:( deque_t* pt_deque, deque_iterator_t t_begin, deque_iterator_t t_end)
+./tags:2444:deque_erase_range	src/cstl_deque.c	/^deque_iterator_t deque_erase_range($/;"	f	signature:( deque_t* pt_deque, deque_iterator_t t_begin, deque_iterator_t t_end)
+./tags:2445:deque_front	include/cstl_deque.h	/^extern void* deque_front(const deque_t* cpt_deque);$/;"	p	signature:(const deque_t* cpt_deque)
+./tags:2446:deque_front	src/cstl_deque.c	/^void* deque_front(const deque_t* cpt_deque)$/;"	f	signature:(const deque_t* cpt_deque)
+./tags:2447:deque_great	include/cstl_deque.h	/^extern bool_t deque_great($/;"	p	signature:( const deque_t* cpt_dequefirst, const deque_t* cpt_dequesecond)
+./tags:2448:deque_great	src/cstl_deque.c	/^bool_t deque_great($/;"	f	signature:( const deque_t* cpt_dequefirst, const deque_t* cpt_dequesecond)
+./tags:2449:deque_great_equal	include/cstl_deque.h	/^extern bool_t deque_great_equal($/;"	p	signature:( const deque_t* cpt_dequefirst, const deque_t* cpt_dequesecond)
+./tags:2450:deque_great_equal	src/cstl_deque.c	/^bool_t deque_great_equal($/;"	f	signature:( const deque_t* cpt_dequefirst, const deque_t* cpt_dequesecond)
+./tags:2451:deque_init	include/cstl_deque.h	/^extern void deque_init(deque_t* pt_deque);$/;"	p	signature:(deque_t* pt_deque)
+./tags:2452:deque_init	src/cstl_deque.c	/^void deque_init(deque_t* pt_deque)$/;"	f	signature:(deque_t* pt_deque)
+./tags:2453:deque_init_copy	include/cstl_deque.h	/^extern void deque_init_copy(deque_t* pt_dequedest, const deque_t* cpt_dequesrc);$/;"	p	signature:(deque_t* pt_dequedest, const deque_t* cpt_dequesrc)
+./tags:2454:deque_init_copy	src/cstl_deque.c	/^void deque_init_copy(deque_t* pt_dequedest, const deque_t* cpt_dequesrc)$/;"	f	signature:(deque_t* pt_dequedest, const deque_t* cpt_dequesrc)
+./tags:2455:deque_init_copy_range	include/cstl_deque.h	/^extern void deque_init_copy_range($/;"	p	signature:( deque_t* pt_dequedest, deque_iterator_t t_begin, deque_iterator_t t_end)
+./tags:2456:deque_init_copy_range	src/cstl_deque.c	/^void deque_init_copy_range($/;"	f	signature:( deque_t* pt_dequedest, deque_iterator_t t_begin, deque_iterator_t t_end)
+./tags:2458:deque_init_n	include/cstl_deque.h	/^extern void deque_init_n(deque_t* pt_deque, size_t t_count);$/;"	p	signature:(deque_t* pt_deque, size_t t_count)
+./tags:2459:deque_init_n	src/cstl_deque.c	/^void deque_init_n(deque_t* pt_deque, size_t t_count)$/;"	f	signature:(deque_t* pt_deque, size_t t_count)
+./tags:2462:deque_insert_range	include/cstl_deque.h	/^extern void deque_insert_range($/;"	p	signature:( deque_t* pt_deque, deque_iterator_t t_pos, deque_iterator_t t_begin, deque_iterator_t t_end)
+./tags:2463:deque_insert_range	src/cstl_deque.c	/^void deque_insert_range($/;"	f	signature:( deque_t* pt_deque, deque_iterator_t t_pos, deque_iterator_t t_begin, deque_iterator_t t_end)
+./tags:2465:deque_less	include/cstl_deque.h	/^extern bool_t deque_less($/;"	p	signature:( const deque_t* cpt_dequefirst, const deque_t* cpt_dequesecond)
+./tags:2466:deque_less	src/cstl_deque.c	/^bool_t deque_less(const deque_t* cpt_dequefirst, const deque_t* cpt_dequesecond)$/;"	f	signature:(const deque_t* cpt_dequefirst, const deque_t* cpt_dequesecond)
+./tags:2467:deque_less_equal	include/cstl_deque.h	/^extern bool_t deque_less_equal($/;"	p	signature:( const deque_t* cpt_dequefirst, const deque_t* cpt_dequesecond)
+./tags:2468:deque_less_equal	src/cstl_deque.c	/^bool_t deque_less_equal($/;"	f	signature:( const deque_t* cpt_dequefirst, const deque_t* cpt_dequesecond)
+./tags:2469:deque_max_size	include/cstl_deque.h	/^extern size_t deque_max_size(const deque_t* cpt_deque);$/;"	p	signature:(const deque_t* cpt_deque)
+./tags:2470:deque_max_size	src/cstl_deque.c	/^size_t deque_max_size(const deque_t* cpt_deque)$/;"	f	signature:(const deque_t* cpt_deque)
+./tags:2471:deque_not_equal	include/cstl_deque.h	/^extern bool_t deque_not_equal($/;"	p	signature:( const deque_t* cpt_dequefirst, const deque_t* cpt_dequesecond)
+./tags:2472:deque_not_equal	src/cstl_deque.c	/^bool_t deque_not_equal($/;"	f	signature:( const deque_t* cpt_dequefirst, const deque_t* cpt_dequesecond)
+./tags:2473:deque_pop_back	include/cstl_deque.h	/^extern void deque_pop_back(deque_t* pt_deque);$/;"	p	signature:(deque_t* pt_deque)
+./tags:2474:deque_pop_back	src/cstl_deque.c	/^void deque_pop_back(deque_t* pt_deque)$/;"	f	signature:(deque_t* pt_deque)
+./tags:2475:deque_pop_front	include/cstl_deque.h	/^extern void deque_pop_front(deque_t* pt_deque);$/;"	p	signature:(deque_t* pt_deque)
+./tags:2476:deque_pop_front	src/cstl_deque.c	/^void deque_pop_front(deque_t* pt_deque)$/;"	f	signature:(deque_t* pt_deque)
+./tags:2479:deque_rbegin	include/cstl_deque.h	/^extern deque_reverse_iterator_t deque_rbegin(const deque_t* cpt_deque);$/;"	p	signature:(const deque_t* cpt_deque)
+./tags:2480:deque_rbegin	src/cstl_deque.c	/^deque_reverse_iterator_t deque_rbegin(const deque_t* cpt_deque)$/;"	f	signature:(const deque_t* cpt_deque)
+./tags:2481:deque_rend	include/cstl_deque.h	/^extern deque_reverse_iterator_t deque_rend(const deque_t* cpt_deque);$/;"	p	signature:(const deque_t* cpt_deque)
+./tags:2482:deque_rend	src/cstl_deque.c	/^deque_reverse_iterator_t deque_rend(const deque_t* cpt_deque)$/;"	f	signature:(const deque_t* cpt_deque)
+./tags:2483:deque_resize	include/cstl_deque.h	/^extern void deque_resize(deque_t* pt_deque, size_t t_resize);$/;"	p	signature:(deque_t* pt_deque, size_t t_resize)
+./tags:2484:deque_resize	src/cstl_deque.c	/^void deque_resize(deque_t* pt_deque, size_t t_resize)$/;"	f	signature:(deque_t* pt_deque, size_t t_resize)
+./tags:2487:deque_size	include/cstl_deque.h	/^extern size_t deque_size(const deque_t* cpt_deque);$/;"	p	signature:(const deque_t* cpt_deque)
+./tags:2488:deque_size	src/cstl_deque.c	/^size_t deque_size(const deque_t* cpt_deque)$/;"	f	signature:(const deque_t* cpt_deque)
+./tags:2489:deque_swap	include/cstl_deque.h	/^extern void deque_swap(deque_t* pt_dequefirst, deque_t* pt_dequesecond);$/;"	p	signature:(deque_t* pt_dequefirst, deque_t* pt_dequesecond)
+./tags:2490:deque_swap	src/cstl_deque.c	/^void deque_swap(deque_t* pt_dequefirst, deque_t* pt_dequesecond)$/;"	f	signature:(deque_t* pt_dequefirst, deque_t* pt_dequesecond)
+./tags:2491:deque_t	include/cstl_deque_private.h	/^}deque_t;$/;"	t	typeref:struct:_tagdeque
+./test/test_algo.c:367:        deque_t t_q = create_deque(struct abc_t);
+./test/test_algo.c:396:        deque_t t_q = create_deque(int);
+./test/test_algo.c:762:        deque_t t_dq = create_deque(int);
+./test/test_algo.c:804:        deque_t t_dq = create_deque(bool_t);
+./test/test_algo.c:841:        deque_t t_dq = create_deque(int);
+./test/test_algo.c:880:        deque_t t_dq = create_deque(int);
+./test/test_algo.c:1091:        deque_t t_dq = create_deque(int);
+./test/test_algo.c:1170:        deque_t t_dq = create_deque(int);
+./test/test_algo.c:1485:        deque_t t_dq = create_deque(int);
+./test/test_algo.c:1580:        deque_t t_dq = create_deque(struct abc_t);
+./test/test_algo.c:1692:        deque_t t_dq = create_deque(int);
+./test/test_algo.c:1729:        deque_t t_dq = create_deque(int);
+./test/test_algo.c:1972:        deque_t t_dq = create_deque(int);
+./test/test_algo.c:2069:        deque_t t_dq = create_deque(int);
+./test/test_algobase.c:50:    deque_t t_d = create_deque(float);
+./test/test_numeric.c:113:        deque_t t_d = create_deque(int);
+./test/test_numeric.c:182:        deque_t t_d = create_deque(float);
+./test/test_numeric.c:337:        deque_t t_d = create_deque(int);
+./test/test_deque.c:40:        deque_t t_dq = create_deque(double);
+./test/test_deque.c:56:        deque_t t_dq = create_deque(int);

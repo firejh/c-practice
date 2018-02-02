@@ -1,0 +1,6 @@
+
+ make mem_check
+ valgrind --log-file=unlock_info --track-origins=yes --leak-check=full --show-reachable=yes -v bin/unlock_ring
+ time diff:314569
+ valgrind --log-file=lock_info --track-origins=yes --leak-check=full --show-reachable=yes -v bin/lock_ring
+ time diff:386303

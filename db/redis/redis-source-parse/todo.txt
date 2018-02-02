@@ -1,0 +1,4 @@
+2015/07/27 todo list：
+1 让sentinel可以从redis实例中读取cluster架构；
+2 sendBulkToSlave给其中添加sendfile；
+3 因为sendfile需要设置TCP_CORK[与TCP_NODELAY不能并用]，用用户设置了对TCP_NODELAY为no的时候，可以在其中添加TCP_CORK选项；

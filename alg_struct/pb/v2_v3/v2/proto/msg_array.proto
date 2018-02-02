@@ -1,0 +1,11 @@
+syntax = "proto2";
+
+package proto2_proto_example;
+
+import "msg.proto";
+
+message MessageArray
+{
+   map<string, proto2_proto.Message> msg_map = 1;
+}
+

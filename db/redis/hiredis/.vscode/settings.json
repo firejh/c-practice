@@ -1,0 +1,44 @@
+{
+    "files.defaultLanguage": "c", // ctrl+N新建文件后默认的语言
+    "files.associations": {
+        "hiredis.h": "c",
+        "assert.h": "c",
+        "unistd.h": "c",
+        "__mutex_base": "c",
+        "memory": "c",
+        "__locale": "c",
+        "pipeline.h": "c",
+        "type.h": "c",
+        "ios": "cpp"
+    },
+    "c-cpp-flylint.cppcheck.enable": true,
+    "c-cpp-flylint.flexelint.enable": true,
+    "c-cpp-flylint.run": "onType", // 此选项貌似不起作用
+    "c-cpp-flylint.clang.includePaths": [
+        "${workspaceRoot}",
+        "/usr/local/include",
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1",
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.0.0/include",
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk/usr/include",
+        "/usr/include", "/usr/include/machine", "${workspaceRoot}"
+    ],
+    "c-cpp-flylint.clang.defines": [
+        "_DEBUG",
+        "UNICODE",
+        "__GNUC__=7",
+        "__cdecl=__attribute__((__cdecl__))"
+    ],
+    "c-cpp-flylint.standard": [ // 此选项貌似也不起作用
+        "c11",
+        "c++1z"
+    ],
+    "code-runner.runInTerminal": true, // 设置成false会在“输出”中输出，无法交互
+    "code-runner.executorMap": {
+        "c": "cd $dir && clang $fileName -o $fileNameWithoutExt.exe -Wall -g -Og -static-libgcc -fcolor-diagnostics --target=x86_64-w64-mingw -std=c11 && $dir$fileNameWithoutExt",
+        "cpp": "cd $dir && clang++ $fileName -o $fileNameWithoutExt.exe -Wall -g -Og -static-libgcc -fcolor-diagnostics --target=x86_64-w64-mingw -std=c++1z && $dir$fileNameWithoutExt"
+    },
+    "code-runner.saveFileBeforeRun": true,
+    "C_Cpp.clang_format_sortIncludes": true,
+    "C_Cpp.errorSquiggles": "Disabled"
+}

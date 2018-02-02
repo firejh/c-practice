@@ -1,0 +1,7 @@
+
+description	: to output colorful string on 8-bit depth screen(unix-like shell)
+author		: Alex Stocks
+version		: 0.1
+date:		: June 5, 2014
+license		: GPL 2.0
+

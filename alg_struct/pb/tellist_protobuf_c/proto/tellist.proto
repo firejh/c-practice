@@ -1,0 +1,11 @@
+package phone.contact;
+
+message uin_tel	{
+	optional	string	name	= 1;
+	optional	uint64	num		= 2;
+}
+
+message uin_tel_list	{
+	repeated	uin_tel	tel = 1;	// tel num array
+}
+
