@@ -240,8 +240,9 @@ void signal_set(int sig, SIGHDLR * func, int flags)
     sa.sa_handler = func;
     sa.sa_flags = flags;
     sigemptyset(&sa.sa_mask);
-    if (sigaction(sig, &sa, NULL) < 0)
+    if (sigaction(sig, &sa, NULL) < 0) {
         fprintf(stderr, "sigaction: sig=%d func=%p: %s\n", sig, func, strerror(errno));
+    }
 }
 
 void init_signals(void)
@@ -292,7 +293,7 @@ int checkRunningPid(void)
     return 1;
 }
 
-void writePidFile(void)
+void write_pidfile(void)
 {
     FILE *fp;
     const char *f = PID_FILENAME;
@@ -328,7 +329,7 @@ static void show_version(void)
     exit(1);
 }
 
-void mainParseOptions(int argc, char *argv[])
+void parse_options(int argc, char *argv[])
 {
     extern char *optarg;
     int c;
@@ -371,7 +372,7 @@ void mainParseOptions(int argc, char *argv[])
     }
 }
 
-void enableCoredumps(void)
+void enable_coredump(void)
 {
     /* Set Linux DUMPABLE flag */
     if (prctl(PR_SET_DUMPABLE, 1, 0, 0, 0) != 0) {
@@ -557,15 +558,15 @@ int main(int argc, char **argv)
 
     init_config();
 
-    mainParseOptions(argc, argv);
+    parse_options(argc, argv);
     if (-1 == g_conf->opt_send_signal) {
         if (checkRunningPid()) {
             exit(1);
         }
     }
 
-    enableCoredumps();
-    writePidFile();
+    enable_coredump();
+    write_pidfile();
     save_argv(argc, argv);
     init_setproctitle();
     init_signals();
