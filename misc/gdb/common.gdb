@@ -92,11 +92,11 @@ document attach_child
 end
 
 define start_processes
-    set detach-on-fork off
+    set detach-on-fork on
     show detach-on-fork
 end
-document start_threads
-    set detach-on-fork off
+document start_processes
+    set detach-on-fork on
 end
 
 define stop_processes
