@@ -11,6 +11,8 @@
 #include <sys/time.h>
 #include <sys/resource.h>
 
+#include "log.h"
+
 #define DefaultConfigFile "/opt/project/getslice/conf/getslice_lunbo.conf"
 #define PID_FILENAME "/var/run/getslice_lunbo.pid"
 #define VERSION "1.0.0"
@@ -22,25 +24,27 @@
 #define PROCESS_JUST_RESPAWN  -4
 #define PROCESS_DETACHED      -5
 
+#define PROCESS_NAME_LEN      64
+
 const char *appname="getslice_lunbo";
 char *ConfigFile = NULL;
 
 typedef void (*spawn_proc_pt) (void *data);
 
 typedef struct {
-    pid_t           pid;
-    int                 status;
-    //int        channel[2];
+    pid_t          pid;
+    int            status;
+    // int           channel[2];
 
-    spawn_proc_pt   proc;
-    void               *data;
-    char               *name;
+    spawn_proc_pt  proc;
+    void           *data;
+    char           name[PROCESS_NAME_LEN];
 
-    unsigned            respawn:1;
-    unsigned            just_spawn:1;
-    unsigned            detached:1;
-    unsigned            exiting:1;
-    unsigned            exited:1;
+    unsigned       respawn:1;
+    unsigned       just_spawn:1;
+    unsigned       detached:1;
+    unsigned       exiting:1;
+    unsigned       exited:1;
 } process_t;
 
 typedef struct {
@@ -105,39 +109,46 @@ void setproctitle(char *title)
 
 void worker_process_init(int worker)
 {
-
+    LOG_INFO("init worker process, worker pid:%ld, worker id:%d", getpid(), worker);
 }
 
-void worker_process_exit(void)
+void worker_process(int worker)
 {
+    LOG_INFO("\trun worker process, worker pid:%ld, worker id:%d", getpid(), worker);
+    sleep(10);
+}
 
+void worker_process_exit(int worker)
+{
+    LOG_INFO("destroy worker process, worker pid:%ld, worker id:%d", getpid(), worker);
 }
 
 void worker_process_cycle(void *data)
 {
-    int worker = (intptr_t) data;
+    int worker = (intptr_t)data;
+    LOG_INFO("worker process cycle worker id %d", worker);
 
     worker_process_init(worker);
 
-    setproctitle("getslice:worker process");
+    setproctitle("getslice-worker-process");
 
-    for ( ;; ) {
+    for (;;) {
         if (g_conf->exiting) {
-                fprintf(stderr, "g_conf->exiting");
-                worker_process_exit();
+            LOG_WARN("exiting");
+            worker_process_exit(worker);
         }
-        sleep(1);
-        fprintf(stderr, "\tworker cycle pid: %d\n", getpid());
+        // LOG_INFO("\tworker cycle pid: %d\n", getpid());
+        worker_process(worker);
 
         if (g_conf->terminate) {
-            fprintf(stderr, "g_conf->exiting");
-            worker_process_exit();
+            LOG_WARN("exiting");
+            worker_process_exit(worker);
         }
 
         if (g_conf->quit) {
             g_conf->quit = 0;
-            fprintf(stderr, "gracefully shutting down");
-            setproctitle("worker process is shutting down");
+            LOG_WARN("gracefully shutting down");
+            setproctitle("worker-process-is-shutting-down");
 
             if (!g_conf->exiting) {
                 g_conf->exiting = 1;
@@ -148,39 +159,46 @@ void worker_process_cycle(void *data)
 
 void dispatcher_process_init(int worker)
 {
-
+    LOG_INFO("init dispatcher process, process id:%ld, dispatcher id:%d", getpid(), worker);
 }
 
-void dispatcher_process_exit()
+void dispatcher_process(int worker)
 {
-
+    LOG_INFO("\trun dispatcher process, process id:%ld, dispatcher id:%d", getpid(), worker);
+    sleep(10);
 }
+
+void dispatcher_process_exit(int worker)
+{
+    LOG_INFO("destroy dispatcher process, process id:%ld, dispatcher id:%d", getpid(), worker);
+}
+
 void dispatcher_process_cycle(void *data)
 {
     int worker = (intptr_t) data;
 
     dispatcher_process_init(worker);
 
-    setproctitle("getslice:dispatcher process");
+    setproctitle("getslice-dispatcher-process");
 
-    for ( ;; ) {
+    for (;;) {
         if (g_conf->exiting) {
-                fprintf(stderr, "g_conf->exiting\n");
-                dispatcher_process_exit();
+            LOG_WARN("exiting\n");
+            dispatcher_process_exit(worker);
         }
 
-        sleep(1);
-        fprintf(stderr, "\tdispatcher cycle pid: %d\n", getpid());
+        // LOG_WARN("\tdispatcher cycle pid: %d\n", getpid());
+        dispatcher_process(worker);
 
         if (g_conf->terminate) {
-            fprintf(stderr, "g_conf->exiting\n");
-            dispatcher_process_exit();
+            LOG_WARN("exiting\n");
+            dispatcher_process_exit(worker);
         }
 
         if (g_conf->quit) {
             g_conf->quit = 0;
-            fprintf(stderr, "gracefully shutting down\n");
-            setproctitle("worker process is shutting down");
+            LOG_WARN("gracefully shutting down\n");
+            setproctitle("worker-process-is-shutting-down");
 
             if (!g_conf->exiting) {
                 g_conf->exiting = 1;
@@ -192,33 +210,48 @@ void dispatcher_process_cycle(void *data)
 void start_worker_processes(int n, int type)
 {
     int i;
-    fprintf(stderr, "start worker g_conf->processes\n");
+    LOG_INFO("start worker processes\n");
 
+    char process_name[PROCESS_NAME_LEN];
     for (i = 0; i < n; i++) {
-        spawn_process(worker_process_cycle, (void *) (intptr_t) i, "worker process", type);
+        snprintf(process_name, sizeof(process_name), "worker-process-%d", i);
+        spawn_process(worker_process_cycle, (void*)(intptr_t)(i), process_name, type);
     }
 }
 
 void start_dispatcher_process(int type)
 {
-    fprintf(stderr, "start dispatcher g_conf->processes\n");
-    spawn_process(dispatcher_process_cycle, (void *) (intptr_t) 0, "dispatcher process", type);
+    LOG_INFO("start dispatcher processes\n");
+    spawn_process(dispatcher_process_cycle, (void *)(intptr_t)(0), "dispatcher process", type);
 }
-
 
 void save_argv(int argc, char *const *argv)
 {
     g_conf->os_argv = (char **) argv;
 }
 
+char* get_process_name()
+{
+    int i;
+    pid_t pid = getpid();
+
+    for (i = 0; i < g_conf->last_process; i++) {
+        if (g_conf->processes[i].pid == pid) {
+            return g_conf->processes[i].name;
+        }
+    }
+
+    return "";
+}
+
 void sig_child(int sig)
 {
-    g_conf->reap = 1;
-
     int status;
     int i;
     pid_t pid;
 
+    LOG_INFO("pid:%ld, process name:%s, get signal:%d", getpid(), get_process_name(), sig);
+    g_conf->reap = 1;
     do {
         pid = waitpid(-1, &status, WNOHANG);
         for (i = 0; i < g_conf->last_process; i++) {
@@ -241,7 +274,7 @@ void signal_set(int sig, SIGHDLR * func, int flags)
     sa.sa_flags = flags;
     sigemptyset(&sa.sa_mask);
     if (sigaction(sig, &sa, NULL) < 0) {
-        fprintf(stderr, "sigaction: sig=%d func=%p: %s\n", sig, func, strerror(errno));
+        LOG_WARN("sigaction: sig=%d func=%p: %s\n", sig, func, strerror(errno));
     }
 }
 
@@ -250,7 +283,7 @@ void init_signals(void)
     signal_set(SIGCHLD, sig_child, SA_NODEFER | SA_RESTART);
 }
 
-static pid_t readPidFile(void)
+static pid_t read_pid_file(void)
 {
     FILE *pid_fp = NULL;
     const char *f = PID_FILENAME;
@@ -258,37 +291,38 @@ static pid_t readPidFile(void)
     int i;
 
     if (f == NULL) {
-        fprintf(stderr, "%s: error: no pid file name defined\n", appname);
+        LOG_WARN("%s: error: no pid file name defined\n", appname);
         exit(1);
     }
 
     pid_fp = fopen(f, "r");
     if (pid_fp != NULL) {
         pid = 0;
-        if (fscanf(pid_fp, "%d", &i) == 1)
+        if (fscanf(pid_fp, "%d", &i) == 1) {
             pid = (pid_t) i;
+        }
         fclose(pid_fp);
     } else {
         if (errno != ENOENT) {
-            fprintf(stderr, "%s: error: could not read pid file\n", appname);
-            fprintf(stderr, "\t%s: %s\n", f, strerror(errno));
+            LOG_WARN("%s: error: could not read pid file\n", appname);
+            LOG_WARN("\t%s: %s\n", f, strerror(errno));
             exit(1);
         }
     }
     return pid;
 }
 
-int checkRunningPid(void)
+int check_running_pid(void)
 {
     pid_t pid;
-    pid = readPidFile();
+    pid = read_pid_file();
     if (pid < 2) {
         return 0;
     }
     if (kill(pid, 0) < 0) {
         return 0;
     }
-    fprintf(stderr, "getslice_master is already running!  process id %ld\n", (long int) pid);
+    LOG_WARN("getslice_master is already running!  process id %ld\n", (long int) pid);
 
     return 1;
 }
@@ -299,7 +333,7 @@ void write_pidfile(void)
     const char *f = PID_FILENAME;
     fp = fopen(f, "w+");
     if (!fp) {
-        fprintf(stderr, "could not write pid file '%s': %s\n", f, strerror(errno));
+        LOG_WARN("could not write pid file '%s': %s\n", f, strerror(errno));
         return;
     }
     fprintf(fp, "%d\n", (int) getpid());
@@ -308,24 +342,24 @@ void write_pidfile(void)
 
 void usage(void)
 {
-    fprintf(stderr,
-            "Usage: %s [-?hvVN] [-d level] [-c config-file] [-k signal]\n"
-            "       -h        Print help message.\n"
-            "       -v        Show Version and exit.\n"
-            "       -N        No daemon mode.\n"
-            "       -c file   Use given config-file instead of\n"
-            "                 %s\n"
-            "       -k reload|rotate|kill|parse\n"
-            "                 kill is fast shutdown\n"
-            "                 Parse configuration file, then send signal to \n"
-            "                 running copy (except -k parse) and exit.\n",
-            appname, DefaultConfigFile);
+    pline("Usage: %s [-?hvVN] [-d level] [-c config-file] [-k signal]\n"
+          "       -h        Print help message.\n"
+          "       -v        Show Version and exit.\n"
+          "       -N        No daemon mode.\n"
+          "       -c file   Use given config-file instead of\n"
+          "                 %s\n"
+          "       -k reload|rotate|kill|parse\n"
+          "                 kill is fast shutdown\n"
+          "                 Parse configuration file, then send signal to \n"
+          "                 running copy (except -k parse) and exit.",
+          appname, DefaultConfigFile);
+
     exit(1);
 }
 
 static void show_version(void)
 {
-    fprintf(stderr, "%s version: %s\n", appname,VERSION);
+    LOG_WARN("%s version: %s\n", appname,VERSION);
     exit(1);
 }
 
@@ -376,7 +410,7 @@ void enable_coredump(void)
 {
     /* Set Linux DUMPABLE flag */
     if (prctl(PR_SET_DUMPABLE, 1, 0, 0, 0) != 0) {
-        fprintf(stderr, "prctl: %s\n", strerror(errno));
+        LOG_WARN("prctl: %s\n", strerror(errno));
     }
 
     /* Make sure coredumps are not limited */
@@ -384,11 +418,11 @@ void enable_coredump(void)
     if (getrlimit(RLIMIT_CORE, &rlim) == 0) {
         rlim.rlim_cur = rlim.rlim_max;
         if (setrlimit(RLIMIT_CORE, &rlim) == 0) {
-            fprintf(stderr, "Enable Core Dumps OK!\n");
+            LOG_INFO("Enable Core Dumps OK!\n");
             return;
         }
     }
-    fprintf(stderr, "Enable Core Dump failed: %s\n",strerror(errno));
+    LOG_WARN("Enable Core Dump failed: %s\n",strerror(errno));
 }
 
 int reap_children(void)
@@ -399,7 +433,7 @@ int reap_children(void)
     live = 0;
     for (i = 0; i < g_conf->last_process; i++) {
                 //child[0] 26718 e:0 t:0 d:0 r:1 j:0
-        fprintf(stderr,"child[%d] %d e:%d t:%d d:%d r:%d j:%d\n",
+        LOG_WARN("child[%d] %d e:%d t:%d d:%d r:%d j:%d\n",
                        i,
                        g_conf->processes[i].pid,
                        g_conf->processes[i].exiting,
@@ -415,24 +449,17 @@ int reap_children(void)
         if (g_conf->processes[i].exited) {
             if (!g_conf->processes[i].detached) {
                 for (n = 0; n < g_conf->last_process; n++) {
-                    if (g_conf->processes[n].exited
-                        || g_conf->processes[n].pid == -1)
-                    {
+                    if (g_conf->processes[n].exited || g_conf->processes[n].pid == -1) {
                         continue;
                     }
 
-                    fprintf(stderr,"detached:%d\n", g_conf->processes[n].pid);
+                    LOG_WARN("detached:%d\n", g_conf->processes[n].pid);
                 }
             }
 
-            if (g_conf->processes[i].respawn
-                && !g_conf->processes[i].exiting
-                && !g_conf->terminate
-                && !g_conf->quit)
-            {
-                if (spawn_process(g_conf->processes[i].proc, g_conf->processes[i].data, g_conf->processes[i].name, i) == -1)
-                {
-                    fprintf(stderr, "could not respawn %s\n", g_conf->processes[i].name);
+            if (g_conf->processes[i].respawn && !g_conf->processes[i].exiting && !g_conf->terminate && !g_conf->quit) {
+                if (spawn_process(g_conf->processes[i].proc, g_conf->processes[i].data, g_conf->processes[i].name, i) == -1) {
+                    LOG_WARN("could not respawn %s\n", g_conf->processes[i].name);
                     continue;
                 }
 
@@ -443,7 +470,6 @@ int reap_children(void)
 
             if (i == g_conf->last_process - 1) {
                 g_conf->last_process--;
-
             } else {
                 g_conf->processes[i].pid = -1;
             }
@@ -458,9 +484,9 @@ int reap_children(void)
 
 pid_t spawn_process(spawn_proc_pt proc, void *data, char *name, int respawn)
 {
-    long     on;
-    pid_t  pid;
-    int  s;
+    long  on;
+    pid_t pid;
+    int   s;
 
     if (respawn >= 0) {
         s = respawn;
@@ -472,7 +498,7 @@ pid_t spawn_process(spawn_proc_pt proc, void *data, char *name, int respawn)
         }
 
         if (s == MAX_PROCESSES) {
-            fprintf(stderr, "no more than %d g_conf->processes can be spawned", MAX_PROCESSES);
+            LOG_WARN("no more than %d g_conf->processes can be spawned", MAX_PROCESSES);
             return -1;
         }
     }
@@ -483,7 +509,7 @@ pid_t spawn_process(spawn_proc_pt proc, void *data, char *name, int respawn)
 
     switch (pid) {
     case -1:
-        fprintf(stderr, "fork() failed while spawning \"%s\" :%s", name, errno);
+        LOG_WARN("fork() failed while spawning \"%s\" :%s", name, errno);
         return -1;
 
     case 0:
@@ -495,7 +521,7 @@ pid_t spawn_process(spawn_proc_pt proc, void *data, char *name, int respawn)
         break;
     }
 
-    fprintf(stderr, "start %s %d\n", name, pid);
+    LOG_INFO("start %s %d\n", name, pid);
 
     g_conf->processes[s].pid = pid;
     g_conf->processes[s].exited = 0;
@@ -506,7 +532,7 @@ pid_t spawn_process(spawn_proc_pt proc, void *data, char *name, int respawn)
 
     g_conf->processes[s].proc = proc;
     g_conf->processes[s].data = data;
-    g_conf->processes[s].name = name;
+    strncpy(g_conf->processes[s].name, name, sizeof(g_conf->processes[s].name));
     g_conf->processes[s].exiting = 0;
 
     switch (respawn) {
@@ -560,7 +586,7 @@ int main(int argc, char **argv)
 
     parse_options(argc, argv);
     if (-1 == g_conf->opt_send_signal) {
-        if (checkRunningPid()) {
+        if (check_running_pid()) {
             exit(1);
         }
     }
@@ -572,23 +598,25 @@ int main(int argc, char **argv)
     init_signals();
     sigemptyset(&set);
 
-    printf("father pid1=%d\n",getpid());
+    pline("father pid1=%d\n", getpid());
     int worker_processes = 3;
     start_worker_processes(worker_processes, PROCESS_RESPAWN);
 
     start_dispatcher_process(PROCESS_RESPAWN);
-    printf("father pid2=%d\n",getpid());
+    printf("father pid2=%d\n", getpid());
 
     int live = 1;
     for (;;) {
-        printf("father before suspend\n");
+        pline("father before suspend\n");
         sigsuspend(&set);
-        printf("father after suspend\n");
+        pline("father after suspend\n");
         if (g_conf->reap) {
             g_conf->reap = 0;
-            fprintf(stderr, "reap children\n");
+            LOG_WARN("reap children\n");
             live = reap_children();
         }
     }
+
     return 0;
 }
+
