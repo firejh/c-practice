@@ -14,7 +14,7 @@ SRC_DIR		= ./src
 EXAM_DIR	= ./exam
 OBJ_DIR		= ./obj
 BIN_DIR		= ./bin
-BIN			= ini_test
+BIN			= ngx_test
 
 INC			= -I$(INC_DIR)
 LIB			= -lpthread
@@ -42,6 +42,9 @@ $(OBJ_DIR)/%.o:$(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
 
 $(BIN_DIR)/ini_test:$(addprefix $(OBJ_DIR)/, ini.o ini_test.o)
+	$(CC) $(CFLAGS) -o $@ $^ $(LIB)
+
+$(BIN_DIR)/ngx_test:$(addprefix $(OBJ_DIR)/, ngx.o)
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB)
 
 strip:

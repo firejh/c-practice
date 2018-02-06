@@ -4,6 +4,7 @@ const char *ini_config = "hover     =      lees       \n"  \
         " data =    7 \n"   \
         " maxthread=255\n"  \
         ";this is a comment line\r\n"   \
+        ";中文注释\n"   \
         "yahoo    =alibaba     \n"  \
         "     [section1]   \n"  \
         "hover   =  lees2  \n"  \
@@ -19,11 +20,9 @@ int main(int argc,char* argv[])
     printf("------------test1-----------\n");
     config = ini_config_create_from_string((unsigned char*)(ini_config), 0, 0);
     if (config) {
-        FILE *conf_file = fopen(conf_file_name, "w");
         ini_config_print(config, stdout);
-        ini_config_print(config, conf_file);
+        ini_config_save(config, conf_file_name);
         ini_config_destroy(config);
-        fclose(conf_file);
     }
 
     printf("\n------------test2-----------\n");
