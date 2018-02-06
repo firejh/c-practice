@@ -41,7 +41,7 @@
 * [atom] - linux glibc原子操作函数实例
 * [time] - 测试tencent/msec/monitor/agent/monitor_api/opt_time.h
 * [gdb] - gdbinit脚本模板
-
+* [signal] - 父子进程模式下signal使用示例
 
 ## zk-kafka
 * [zk] - zookeeper c api使用样例
